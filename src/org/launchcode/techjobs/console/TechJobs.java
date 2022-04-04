@@ -2,7 +2,9 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
 
 /**
  * Created by LaunchCode
@@ -11,7 +13,7 @@ public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -61,7 +63,7 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    System.out.println(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -103,14 +105,33 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        //(1) Iterate over the Jobs Array List
+        // Each Job is a HashMap, (2) Create a nested loop to loop over each HashMap
 
-        System.out.println("printJobs is not implemented yet");
+        //(0)it prints a descriptive message if no jobs are found
+        if(someJobs.size() == 0){
+            System.out.println("Your Search Returned No Results");
+            return;
+        }
+        //started with .... for (int i = 0; i < someJobs.size(); i++)
+        //(1) Use enhanced FOR LOOP to iterate over the Jobs array list
+        for (HashMap<String, String> job : someJobs) {
+
+            //for (HashMap<String, String> job : someJobs) {}
+            //(2) Create a nested loop to loop over each HashMap
+            System.out.println("\n*****");
+            for (Map.Entry<String, String> filler : job.entrySet()) {
+                System.out.println("\n" + filler.getKey() + ": " + filler.getValue());
+            }
+            System.out.println("\n*****");
+
+        }
     }
 }

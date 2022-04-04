@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -26,7 +27,7 @@ public class JobData {
      * without duplicates, for a given column.
      *
      * @param field The column to retrieve values from
-     * @return List of all of the values of the given field
+     * @return List of all the values of the given field
      */
     public static ArrayList<String> findAll(String field) {
 
@@ -55,7 +56,7 @@ public class JobData {
     }
 
     /**
-     * Returns results of search the jobs data by key/value, using
+     * Returns results of search the job's data by key/value, using
      * inclusion of the search term.
      *
      * For example, searching for employer "Enterprise" will include results
@@ -69,21 +70,30 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
-
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
         for (HashMap<String, String> row : allJobs) {
-
             String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
-
         return jobs;
     }
+//Search for a value in all columns
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        // load data, if not already loaded
+        loadData();
+        ArrayList<HashMap<String, String>> jobs2 = new ArrayList<>();
+        for(HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String, String> job : row.entrySet()) {
+                if (job.getValue().toLowerCase().contains(value.toLowerCase())) {
+                    jobs2.add(row);
 
+                }
+            }
+        }
+        return jobs2;
+    }
     /**
      * Read in data from a CSV file and store it in a list
      */
