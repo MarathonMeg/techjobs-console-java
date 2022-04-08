@@ -15,7 +15,7 @@ public class TechJobs {
 
     public static void main(String[] args) {
 
-        // Initialize our field map with key/name pairs
+        // Initialize our field map with key/name pairs, the key represents how the column is named in the CVS and the value is how I want it to display in the results I print to the console.
         HashMap<String, String> columnChoices = new HashMap<>();
         columnChoices.put("core competency", "Skill");
         columnChoices.put("employer", "Employer");
@@ -41,13 +41,14 @@ public class TechJobs {
 
                 if (columnChoice.equals("all")) {
                     printJobs(JobData.findAll());
+                    //if they select list, but do not select all:
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
 
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
-                    // Print list of skills, employers, etc
+                    // Print list of skills, employers, etc using a For Each loop, this will print everything in that column heading
                     for (String item : results) {
                         System.out.println(item);
                     }
@@ -116,19 +117,24 @@ public class TechJobs {
         // Each Job is a HashMap, (2) Create a nested loop to loop over each HashMap
 
         //(0)it prints a descriptive message if no jobs are found
-        if(someJobs.size() == 0){
+        if (someJobs.size() == 0) {
             System.out.println("Your Search Returned No Results");
             return;
         }
+        //it will continue on if the condition was not met
+
         //started with .... for (int i = 0; i < someJobs.size(); i++)
-        //(1) Use enhanced FOR LOOP to iterate over the Jobs array list
+        //(1) Use enhanced FOR LOOP (aka For Each) to iterate over the someJobs array list
+        //initializing my results of each HashMap key value pair to be a variable called "job"
         for (HashMap<String, String> job : someJobs) {
 
             //for (HashMap<String, String> job : someJobs) {}
             //(2) Create a nested loop to loop over each HashMap
+            //	My iterator variable, details, is of the type Map.Entry<String, String>
+            //	I have to use Map.Entry since I want to return both the Key and the Value in my results.
             System.out.println("\n*****");
-            for (Map.Entry<String, String> filler : job.entrySet()) {
-                System.out.println("\n" + filler.getKey() + ": " + filler.getValue());
+            for (Map.Entry<String, String> details : job.entrySet()) {
+                System.out.println("\n" + details.getKey() + ": " + details.getValue());
             }
             System.out.println("\n*****");
 
